@@ -29,7 +29,7 @@ export const FeedbackProvider = ({ children }) => {
 
   const deleteFeedback = (id) => {
     if (window.confirm('Are you sure you want to delete a feedback?')) {
-      setFeedback(feedback.filter(({ item }) => item.id !== id));
+      setFeedback(feedback.filter((item) => item.id !== id));
     }
   };
 
