@@ -9,6 +9,7 @@ import feedbackData from './components/data/seed';
 import FeedbackForm from './components/FeedbackForm';
 
 import About from './pages/About';
+import AboutPageIcon from './components/AboutPageIcon';
 
 function App() {
   const [feedback, setFeedback] = useState(feedbackData);
@@ -47,6 +48,8 @@ function App() {
 
           <Route path="/about" element={<About />} />
         </Routes>
+
+        <AboutPageIcon />
       </div>
     </Router>
   );

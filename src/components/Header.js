@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = ({
   text = 'Feedback UI',
@@ -12,7 +13,9 @@ const Header = ({
   return (
     <header style={headerStyles}>
       <div className="container">
-        <h3>{text}</h3>
+        <Link to="/">
+          <h3>{text}</h3>
+        </Link>
       </div>
     </header>
   );
