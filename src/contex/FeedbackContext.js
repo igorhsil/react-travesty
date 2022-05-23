@@ -1,27 +1,27 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 
 
 const FeedbackContext = createContext();
 
 export const FeedbackProvider = ({ children }) => {
-    const [ feedback, setFeedback ] = useState( [ {
-        id: uuid(),
-        rating: 9,
-        text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae.',
-    }, {
-        id: uuid(),
-        rating: 4,
-        text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae.',
-    }, {
-        id: uuid(),
-        rating: 7,
-        text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae.',
-    }, ] );
-
+    const [ feedback, setFeedback ] = useState( [] );
     const [ feedbackEdit, setFeedbackEdit ] = useState( {
         item: {}, edit: false,
     } );
+    const [ isLoading, setIsLoading ] = [ true ];
+
+    useEffect( () => {
+        fetchFeedbackData();
+    }, [] );
+
+    const fetchFeedbackData = async () => {
+        const res = await fetch( `http://localhost:5000/feedback?_sort=id&_order=desc` );
+        const data = await res.json();
+        setFeedback( data );
+        setIsLoading( false );
+
+    };
 
     const deleteFeedback = (id) => {
         if ( window.confirm( 'Are you sure you want to delete a feedback?' ) ) {
@@ -43,12 +43,12 @@ export const FeedbackProvider = ({ children }) => {
     };
 
     return (<FeedbackContext.Provider
-            value={{
-                feedback, feedbackEdit, deleteFeedback, addFeedback, editFeedback, updateFeedback,
-            }}
-        >
-            {children}
-        </FeedbackContext.Provider>);
+        value={{
+            feedback, feedbackEdit, deleteFeedback, addFeedback, editFeedback, updateFeedback, isLoading
+        }}
+    >
+        {children}
+    </FeedbackContext.Provider>);
 };
 
 export default FeedbackContext;
