@@ -9,7 +9,7 @@ export const FeedbackProvider = ({ children }) => {
     const [ feedbackEdit, setFeedbackEdit ] = useState( {
         item: {}, edit: false,
     } );
-    const [ isLoading, setIsLoading ] = [ true ];
+    const [ isLoading, setIsLoading ] = useState(true);
 
     useEffect( () => {
         fetchFeedbackData();
